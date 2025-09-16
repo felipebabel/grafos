@@ -85,12 +85,35 @@ public class Main {
         Grafo g6 = new Grafo(matrizCompleto);
         System.out.println("\n=== GRAFO COMPLETO ===");
         imprimirAnalise(g6);
+
+        // ========================
+        // Grafo para demonstrar busca em profundidade
+        // ========================
+        int[][] matrizBuscaProfundidade = {
+              // a  b  c  d  e
+                {0, 1, 1, 0, 0}, // a
+                {1, 0, 0, 1, 0}, // b
+                {1, 0, 0, 1, 1}, // c
+                {0, 1, 1, 0, 1}, // d
+                {0, 0, 1, 1, 0}  // e
+        };
+        Grafo gBuscaProfundidade = new Grafo(matrizBuscaProfundidade);
+        System.out.println("=== GRAFO PARA DFS ===");
+        imprimirAnalise(gBuscaProfundidade);
+        //Exemplo de como ficaria o grafo acima...
+        //     0 (a)
+        //    / \
+        //   /   \
+        //  1(b)  2(c)
+        //   |    / \
+        //   |   /   \
+        //   3(d)----4(e)
     }
 
     private static void imprimirAnalise(Grafo g) {
         System.out.println("Classificacao: " + g.tipoDoGrafo());
         System.out.println(g.arestasDoGrafo());
         System.out.println(g.grausDoVertice());
-        //System.out.println(g.buscaEmProfundidade());
+        System.out.println(g.buscaEmProfundidade());
     }
 }

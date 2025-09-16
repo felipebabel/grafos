@@ -161,4 +161,29 @@ public class Grafo {
 
         return sb.toString();
     }
+
+    public String buscaEmProfundidade() {
+        boolean[] visitado = new boolean[numVertices]; // marca os vértices já visitados, inicalmente tudo como false
+        StringBuilder ordem = new StringBuilder("Ordem de visita: ");
+
+        for (int v = 0; v < numVertices; v++) {
+            if (!visitado[v]) { // se nao foi visitado vai verificar os vizinhos
+                buscaEmProfundidade(v, visitado, ordem);
+            }
+        }
+
+        return ordem.toString();
+    }
+
+    private void buscaEmProfundidade(int v, boolean[] visitado, StringBuilder ordem) {
+        visitado[v] = true;
+        ordem.append(v).append(" ");  // adiciona na string
+
+        for (int j = 0; j < numVertices; j++) {
+            if (matrizAdj[v][j] > 0 && !visitado[j]) { // se tiver aresta e nao foi visitado entra no metodo de novo
+                buscaEmProfundidade(j, visitado, ordem);
+            }
+        }
+    }
+
 }
