@@ -43,7 +43,61 @@ public class Grafo {
         else if (multigrafo) tipo.append(", Multigrafo");
         else tipo.append(", Simples");
 
+        isCompleto(direcionado, possuiLaco, multigrafo, tipo);
+        boolean isRegular = isRegular(direcionado);
+        if (isRegular) tipo.append(", Regular");
         return tipo.toString();
+    }
+
+    private boolean isRegular(boolean direcionado) {
+        //Um grafo é regular se todos os vértices têm o mesmo grau.
+        int[] graus = new int[numVertices];
+        boolean isRegular = true;
+
+        for (int i = 0; i < numVertices; i++) {
+            int grau = 0;
+            if (direcionado) {
+                // soma entrada e saida
+                for (int j = 0; j < numVertices; j++) {
+                    grau += matrizAdj[i][j];
+                    grau += matrizAdj[j][i];
+                }
+            } else {
+                // Grafo não dirigido: soma a linha (arestas) + laços
+                for (int j = 0; j < numVertices; j++) grau += matrizAdj[i][j];
+                grau += matrizAdj[i][i]; // cada laço conta duas vezes
+            }
+            graus[i] = grau; // armazena grau do vértice i
+        }
+
+        // Verifica se todos os vértices têm o mesmo grau
+        for (int i = 1; i < numVertices; i++) {
+            if (graus[i] != graus[0]) {
+                return false;
+            }
+        }
+        return isRegular;
+    }
+
+
+    private void isCompleto(boolean direcionado, boolean possuiLaco, boolean multigrafo, StringBuilder tipo) {
+        //Um grafo completo (não dirigido, simples) é aquele em que todos os vértices estão conectados a todos os outros vértices, sem laços ou arestas múltiplas.
+        if (!direcionado && !possuiLaco && !multigrafo) {
+            // Número máximo de arestas possíveis em um grafo simples não dirigido
+            int maxArestas = numVertices * (numVertices - 1) / 2; //multiplica coluna x linhas /2
+
+            int contArestas = 0;
+            for (int i = 0; i < numVertices; i++) {
+                for (int j = i + 1; j < numVertices; j++) { // j > i para não contar duas vezes
+                    if (matrizAdj[i][j] > 0) contArestas++;
+                }
+            }
+
+            // Se todas as arestas possíveis existem, é completo
+            if (contArestas == maxArestas) {
+                tipo.append(", Completo");
+            }
+        }
     }
 
     public String arestasDoGrafo() {

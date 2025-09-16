@@ -71,6 +71,20 @@ public class Main {
         Grafo g5 = new Grafo(matrizNulo);
         System.out.println("\n=== GRAFO NULO ===");
         imprimirAnalise(g5);
+
+        // ========================
+        // 6) Grafo completo (simples não dirigido)
+        // ========================
+        int[][] matrizCompleto = {
+                // a  b  c  d
+                {0, 1, 1, 1}, // a
+                {1, 0, 1, 1}, // b
+                {1, 1, 0, 1}, // c
+                {1, 1, 1, 0}  // d
+        };
+        Grafo g6 = new Grafo(matrizCompleto);
+        System.out.println("\n=== GRAFO COMPLETO ===");
+        imprimirAnalise(g6);
     }
 
     private static void imprimirAnalise(Grafo g) {
